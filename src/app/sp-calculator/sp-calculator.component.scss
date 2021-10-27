@@ -137,6 +137,10 @@
       display: flex;
       padding: 44px 25px;
       justify-content: space-between;
+      &__total {
+        color:#2F80ED;
+        font-size: 24px;
+      }
     }
     &__description {
       padding: 10px 25px;
