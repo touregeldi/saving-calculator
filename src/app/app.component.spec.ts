@@ -1,11 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {SpCalculatorComponent} from './sp-calculator/sp-calculator.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgxMaskModule} from 'ngx-mask';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        BrowserModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        NgxMaskModule.forRoot()
+      ],
       declarations: [
-        AppComponent
+        AppComponent,
+        SpCalculatorComponent
       ],
     }).compileComponents();
   });
@@ -20,12 +33,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('saving-app');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('saving-app app is running!');
   });
 });

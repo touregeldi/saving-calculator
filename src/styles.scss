@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden !important;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: "Rambla", sans-serif;
+  color: #102C51;
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app {
+  display: block;
+  background-color: #F4F8FA;
+  min-height: 100%;
+  padding-top: 98px;
+}
