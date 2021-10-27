@@ -38,7 +38,7 @@ export class SpCalculatorComponent implements OnInit {
 
   calculateResult(form: Form): void {
     if (this.isTotal) {
-      const monthly = form.total ? (+form.total / this.monthNumber).toString() : '0';
+      const monthly = (!form.total || this.monthNumber === 0) ? '0' : (+form.total / this.monthNumber).toString();
       this.amountForm.patchValue({
         monthly
       }, { emitEvent: false });
@@ -54,6 +54,7 @@ export class SpCalculatorComponent implements OnInit {
     this.amountForm.valueChanges.subscribe((form: Form) => {
       this.isTotal = form.isTotal;
       this.monthNumber = this.monthDiff(new Date(), this.date);
+      console.log(form)
       this.calculateResult(form);
     });
   }
