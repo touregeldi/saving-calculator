@@ -54,13 +54,12 @@ export class SpCalculatorComponent implements OnInit {
     this.amountForm.valueChanges.subscribe((form: Form) => {
       this.isTotal = form.isTotal;
       this.monthNumber = this.monthDiff(new Date(), this.date);
-      console.log(form)
       this.calculateResult(form);
     });
   }
 
   changeDate(isNext: boolean): void {
-    if (!isNext && (new Date()).getMonth() === this.date.getMonth()) {
+    if (!isNext && (new Date()).getMonth() === this.date.getMonth() && (new Date()).getFullYear() === this.date.getFullYear()) {
       return;
     }
     const adder = isNext ? 1 : -1;
