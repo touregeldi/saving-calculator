@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpCalculatorComponent } from './sp-calculator.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {SavingAppUiModule} from '../ui-components/saving-app-ui.module';
 
 describe('SpCalculatorComponent', () => {
   let component: SpCalculatorComponent;
@@ -10,7 +11,8 @@ describe('SpCalculatorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        SavingAppUiModule
       ],
       declarations: [ SpCalculatorComponent ]
     })
@@ -27,31 +29,12 @@ describe('SpCalculatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should next month', () => {
-    component.changeDate(true);
-    expect(component.date.getMonth()).toEqual((new Date()).getMonth() + 1);
+
+  it('should be 100', () => {
+    expect(component.calculateAmount(true, new Date(2022, 5), '900')).toBe(100);
   });
 
-  it('should this month', () => {
-    component.changeDate(false);
-    expect(component.date.getMonth()).toEqual((new Date()).getMonth());
-  });
-
-  it('should previous month', () => {
-    component.changeDate(true);
-    component.changeDate(true);
-    component.changeDate(true);
-    component.changeDate(false);
-    expect(component.date.getMonth()).toEqual((new Date()).getMonth() + 3 - 1);
-  });
-
-  it('should be calculated', () => {
-    component.changeDate(true);
-    component.changeDate(true);
-    component.changeDate(true);
-    component.amountForm.patchValue({
-      monthly: '300'
-    }, {emitEvent: true});
-    expect(component.amountForm.get('total')?.value).toEqual('900');
+  it('should be 900', () => {
+    expect(component.calculateAmount(false, new Date(2022, 5), '100')).toBe(900);
   });
 });

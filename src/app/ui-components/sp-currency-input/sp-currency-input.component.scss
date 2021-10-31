@@ -1,0 +1,53 @@
+@import "./src/assets/styles/variables";
+.input {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-bottom: 22px;
+  &__label,
+  &__field {
+    white-space: nowrap;
+    display: block;
+    text-align: center;
+    padding: 10px 42px 10px 0;
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+    &:not(:first-child) {
+      margin-left: -1px;
+    }
+  }
+  &__label {
+    font-size: 12px;
+    background: #F4F8FA;
+    padding: 10px 17px;
+    border: 1px solid $white-border;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  &__field {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    border-radius: 6px;
+    background: $background-color-white;
+    border: 1px solid $white-border;
+    &:focus {
+      outline: none;
+    }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+

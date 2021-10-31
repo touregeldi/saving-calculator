@@ -1,54 +1,33 @@
-<div class="sp-calculator">
+<section class="sp-calculator">
   <h1 class="sp-calculator__h1">Saving <br> calculator</h1>
 
-  <form [formGroup]="amountForm">
-    <div class="sp-calculator__switcher">
-      <label class="sp-calculator__toggler">
-        <input type="checkbox" formControlName="isTotal">
-        <span class="sp-calculator__toggler__slider"></span>
-      </label>
-      <span class="sp-calculator__label" >Calculate by {{isTotal ? 'total amount' : 'monthly saving'}}</span>
-    </div>
+  <form [formGroup]="form">
+    <label class="sp-calculator__label--block-display">
+      <app-sp-toggler formControlName="toggler"></app-sp-toggler>
+      <span class="sp-calculator__label">Calculate by {{(form.get('toggler')?.value ? CALCULATOR_TEXTS.totalAmount : CALCULATOR_TEXTS.montlyAmount) | lowercase}}</span>
+    </label>
 
-    <ng-container *ngIf="isTotal else monthlyInput">
-      <span class="sp-calculator__label">Total amount</span>
-      <div class="sp-calculator__input">
-        <span>$</span>
-        <input mask="separator.0" thousandSeparator="," formControlName="total" class="sp-calculator__field" type="text">
-      </div>
-    </ng-container>
+    <label class="sp-calculator__label">
+      {{form.get('toggler')?.value ? CALCULATOR_TEXTS.totalAmount : CALCULATOR_TEXTS.montlyAmount}}
+      <app-sp-currency-input formControlName="input"></app-sp-currency-input>
+    </label>
 
-    <ng-template #monthlyInput>
-      <span class="sp-calculator__label">Monthly amount</span>
-      <div class="sp-calculator__input">
-        <span>$</span>
-        <input mask="separator.0" thousandSeparator="," formControlName="monthly" class="sp-calculator__field" type="text">
-      </div>
-    </ng-template>
-
-    <span class="sp-calculator__label">{{isTotal ? 'Reach goal by' : 'Save until'}}</span>
-    <div class="sp-calculator__input sp-calculator__input--date">
-      <span (click)="changeDate(false)"><</span>
-      <p class="sp-calculator__field">{{date | date: 'MMMM, y'}}</p>
-      <span (click)="changeDate(true)">></span>
-    </div>
+    <label class="sp-calculator__label">
+      {{form.get('toggler')?.value ? CALCULATOR_TEXTS.reachGoal : CALCULATOR_TEXTS.saveUntil}}
+      <app-sp-month-picker formControlName="date"></app-sp-month-picker>
+    </label>
 
     <div class="sp-calculator__result">
       <div class="sp-calculator__result__price">
-        <p>{{isTotal ? 'Monthly amount' : 'Total amount'}}</p>
-        <p class="sp-calculator__result__price__total">{{getResult() | currency:'USD':'symbol-narrow':'.0'}}</p>
+        <p>{{form.get('toggler')?.value ? CALCULATOR_TEXTS.montlyAmount : CALCULATOR_TEXTS.totalAmount}}</p>
+        <p class="sp-calculator__result__price__total">{{amount <= maxValue ? (amount | currency:'USD':'symbol-narrow':'.0') : amountWithExpression}}</p>
       </div>
-      <div class="sp-calculator__result__description" *ngIf="isTotal else monthlyDescription">
-        <p *ngIf="!(amountForm.get('monthly')?.value == '0')">You are planning {{monthNumber}} monthly deposits to reach your {{+amountForm.get('total')?.value | currency:'USD':'symbol-narrow':'.0'}} goal by {{date | date: 'MMMM, y'}}.</p>
+      <div class="sp-calculator__result__description">
+        <p>{{description}}</p>
       </div>
     </div>
   </form>
-</div>
+</section>
 
-<ng-template #monthlyDescription >
-  <div class="sp-calculator__result__description">
-    <p *ngIf="!(amountForm.get('total')?.value == '0')">You are saving {{+amountForm.get('monthly')?.value | currency:'USD':'symbol-narrow':'.0'}} monthly to save {{getResult() | currency:'USD':'symbol-narrow':'.0'}} by {{date | date: 'MMMM, y'}}.</p>
-  </div>
-</ng-template>
 
 

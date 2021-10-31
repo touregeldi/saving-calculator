@@ -1,7 +1,9 @@
+@import "src/assets/styles/variables";
 .sp-calculator {
   max-width: 400px;
-  margin: 0 auto;
-  background: #FFFEFE;
+  overflow: scroll;
+  margin: 98px auto 0;
+  background: $background-color-white;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   padding: 45px 45px 80px;
@@ -14,139 +16,40 @@
 
   &__label {
     font-size: 14px;
-  }
-
-  &__toggler {
-    position: relative;
-    display: inline-block;
-    width: 40px;
-    height: 20px;
-    margin-right: 8px;
-    margin-bottom: 20px;
-    & input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-    &__slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border: 1px solid #CFCFCF;
-      -webkit-transition: .4s;
-      transition: .4s;
-      border-radius: 34px;
-      &::before{
-        position: absolute;
-        content: "";
-        height: 16px;
-        width: 16px;
-        left: 1px;
-        bottom: 1px;
-        background-color: #BDBDBD;
-        -webkit-transition: .4s;
-        transition: .4s;
-        border-radius: 50%;
-      }
-    }
-    & input:focus + &__slider {
-      box-shadow: 0 0 1px #2196F3;
-    }
-    & input:checked + &__slider:before {
-      -webkit-transform: translateX(20px);
-      -ms-transform: translateX(20px);
-      transform: translateX(20px);
-      background-color: #2F80ED;
-    }
-  }
-
-  &__input {
-    position: relative;
-    display: flex;
-    width: 100%;
-    margin-bottom: 22px;
-    & > span,
-    .sp-calculator__field {
-      white-space: nowrap;
+    &--block-display {
       display: block;
-      &:not(:first-child):not(:last-child) {
-        border-radius: 0;
-      }
-      &:first-child {
-        border-radius: 6px 0 0 6px;
-      }
-      &:last-child {
-        border-radius: 0 6px 6px 0;
-      }
-      &:not(:first-child) {
-        margin-left: -1px;
-      }
-    }
-    & > span {
-      text-align: center;
-      padding: 8px 12px;
-      font-size: 12px;
-      color: #828282;
-      line-height: 25px;
-      background: #F4F8FA;
-      border: 1px solid #CFCFCF;
-      transition: background .3s ease, border .3s ease, color .3s ease;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-    &--date > span{
-      cursor: pointer;
-      &:hover {
-        color: white;
-        background-color: #2F80ED;
-      }
     }
   }
-  &__field {
-    display: block;
-    width: 100%;
-    padding: 8px 16px;
-    line-height: 25px;
-    font-size: 14px;
-    text-align: center;
-    font-weight: 500;
-    font-family: inherit;
-    border-radius: 6px;
-    -webkit-appearance: none;
-    background: #FFFEFE;
-    border: 1px solid #CFCFCF;
-    transition: border .3s ease;
-    &:focus {
-      outline: none;
-    }
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
+
   &__result {
-    border: 1px solid #CFCFCF;
+    border: 1px solid $white-border;
     border-radius: 4px;
     &__price {
       display: flex;
       padding: 44px 25px;
       justify-content: space-between;
       align-items: center;
+      font-size: 14px;
       &__total {
-        color:#2F80ED;
+        color: $text-blue;
         font-size: 24px;
       }
     }
     &__description {
-      padding: 10px 25px;
+      padding: 0 25px;
+      display: flex;
+      align-items:center;
+      height: 47px;
       font-size: 10px;
-      background-color: #F4F8FA;
+      background-color: $background-color-blue;
     }
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .sp-calculator {
+    padding: 20px 20px 80px;
+    min-width: 300px;
+    max-height: 500px;
   }
 }

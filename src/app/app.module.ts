@@ -5,7 +5,8 @@ import { AppComponent } from './app.component';
 import { SpCalculatorComponent } from './sp-calculator/sp-calculator.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {IConfig, NgxMaskModule} from 'ngx-mask';
+import {IConfig} from 'ngx-mask';
+import {SavingAppUiModule} from './ui-components/saving-app-ui.module';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
 
@@ -18,7 +19,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
     BrowserModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    NgxMaskModule.forRoot(),
+    SavingAppUiModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

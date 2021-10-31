@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {DateManager} from '../helpers/DateManager';
+import {CALCULATOR_TEXTS, DESCRIPTION, maxValue} from '../variables/variables';
 
-interface Form {
-  isTotal: boolean;
-  monthly: number;
-  total: number;
+interface AmountForm {
+  toggler: false;
+  input: '0';
+  date: Date;
 }
 
 @Component({
@@ -12,62 +16,54 @@ interface Form {
   templateUrl: './sp-calculator.component.html',
   styleUrls: ['./sp-calculator.component.scss']
 })
-export class SpCalculatorComponent implements OnInit {
-  amountForm: FormGroup;
-  date: Date = new Date();
-  isTotal = false;
-  result = '';
-  monthNumber = 0;
+export class SpCalculatorComponent implements OnInit, OnDestroy {
+  public form: FormGroup = this.fb.group({
+    toggler: false,
+    input: ['0', Validators.maxLength(10)],
+    date: new Date()
+  });
+  private destroy: Subject<void> = new Subject<void>();
 
+  public amount = 0;
+  public description = DESCRIPTION.default;
+  public CALCULATOR_TEXTS = CALCULATOR_TEXTS;
+  public maxValue = maxValue;
+  public amountWithExpression: string;
 
-  constructor(private fb: FormBuilder) {
-    this.amountForm = this.fb.group({
-      isTotal: false,
-      monthly: '0',
-      total: '0'
-    });
-  }
-
-  monthDiff(d1: Date, d2: Date): number {
-    let months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth();
-    months += d2.getMonth();
-    return months <= 0 ? 0 : months;
-  }
-
-  calculateResult(form: Form): void {
-    if (this.isTotal) {
-      const monthly = (!form.total || this.monthNumber === 0) ? '0' : (+form.total / this.monthNumber).toString();
-      this.amountForm.patchValue({
-        monthly
-      }, { emitEvent: false });
-    } else {
-      const total = form.monthly ? (this.monthNumber * +form.monthly).toString() : '0';
-      this.amountForm.patchValue({
-        total
-      }, { emitEvent: false });
-    }
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.amountForm.valueChanges.subscribe((form: Form) => {
-      this.isTotal = form.isTotal;
-      this.monthNumber = this.monthDiff(new Date(), this.date);
-      this.calculateResult(form);
+    this.form.valueChanges.pipe(
+      takeUntil(this.destroy)
+    ).subscribe((form: AmountForm) => {
+      console.log(form);
+      this.amount = this.calculateAmount(form.toggler, form.date, form.input);
+      this.amountWithExpression = '$' + this.amount.toExponential(2);
+      this.description = this.getDescription(form.toggler, form.date, form.input, this.amount);
     });
   }
 
-  changeDate(isNext: boolean): void {
-    if (!isNext && (new Date()).getMonth() === this.date.getMonth() && (new Date()).getFullYear() === this.date.getFullYear()) {
-      return;
-    }
-    const adder = isNext ? 1 : -1;
-    this.date = new Date(this.date.getFullYear(), this.date.getMonth() + adder);
-    this.amountForm.updateValueAndValidity({ onlySelf: false, emitEvent: true });
+  ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.complete();
   }
 
-  getResult(): number {
-    return parseInt(this.isTotal ? this.amountForm.get('monthly')?.value : this.amountForm.get('total')?.value, undefined);
+  calculateAmount(monthly: boolean, date: Date, input: string): number {
+    const monthNumber = DateManager.monthDifferenceCalculater((new Date()), date) + 1;
+    if (monthly) {
+      return (+input) / monthNumber;
+    } else {
+      return monthNumber * (+input);
+    }
+  }
+
+  getDescription(toggler: boolean, date: Date, input: string, amount: number): string {
+    if ((+input) === 0) {
+      return DESCRIPTION.default;
+    } else if (toggler){
+      return DESCRIPTION.getMonthly(date, input);
+    } else {
+      return DESCRIPTION.getTotal(date, input, amount);
+    }
   }
 }
