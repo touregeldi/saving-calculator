@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -11,7 +11,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       useExisting: SpTogglerComponent,
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpTogglerComponent implements ControlValueAccessor {
   private onChange: (value: boolean) => void;

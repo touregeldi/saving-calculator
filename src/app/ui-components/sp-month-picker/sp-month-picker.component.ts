@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {DateManager} from '../../helpers/DateManager';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
@@ -12,7 +12,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       useExisting: SpMonthPickerComponent,
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpMonthPickerComponent implements ControlValueAccessor {
   private onChange: (value: Date) => void;

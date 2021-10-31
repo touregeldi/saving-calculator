@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {MaskManager} from '../../helpers/MaskManager';
 
@@ -12,7 +12,8 @@ import {MaskManager} from '../../helpers/MaskManager';
       useExisting: SpCurrencyInputComponent,
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpCurrencyInputComponent implements ControlValueAccessor {
   public onChange: (value: string) => void;
