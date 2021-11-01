@@ -4,6 +4,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {DateManager} from '../helpers/DateManager';
 import {CALCULATOR_TEXTS, DESCRIPTION, maxValue} from '../variables/variables';
+import {CurrencyPipe} from '@angular/common';
 
 interface AmountForm {
   toggler: false;
@@ -27,10 +28,10 @@ export class SpCalculatorComponent implements OnInit, OnDestroy {
   public amount = 0;
   public description = DESCRIPTION.default;
   public CALCULATOR_TEXTS = CALCULATOR_TEXTS;
-  public maxValue = maxValue;
-  public amountWithExpression: string;
+  public amountForDisplay: string = '$0';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,
+              private currencyPipe: CurrencyPipe) {}
 
   ngOnInit(): void {
     this.form.valueChanges.pipe(
@@ -38,7 +39,10 @@ export class SpCalculatorComponent implements OnInit, OnDestroy {
     ).subscribe((form: AmountForm) => {
       console.log(form);
       this.amount = this.calculateAmount(form.toggler, form.date, form.input);
-      this.amountWithExpression = '$' + this.amount.toExponential(2);
+      this.amountForDisplay = this.currencyPipe.transform(this.amount, 'USD', 'symbol-narrow', '.0') || '0';
+      if (this.amountForDisplay.length > maxValue) {
+        this.amountForDisplay = '$' + this.amount.toExponential(2);
+      }
       this.description = this.getDescription(form.toggler, form.date, form.input, this.amount);
     });
   }

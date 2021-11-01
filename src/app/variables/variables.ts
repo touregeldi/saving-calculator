@@ -33,6 +33,6 @@ export const DESCRIPTION = {
   }
 };
 
-export const maxValue = 999999999;
+export const maxValue = 13;
 
 

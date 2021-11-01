@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {IConfig} from 'ngx-mask';
 import {SavingAppUiModule} from './ui-components/saving-app-ui.module';
+import {CurrencyPipe} from '@angular/common';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
 
@@ -20,8 +21,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) | null = null;
     ReactiveFormsModule,
     BrowserAnimationsModule,
     SavingAppUiModule,
+
   ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
