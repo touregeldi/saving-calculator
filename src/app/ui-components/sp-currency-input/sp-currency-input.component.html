@@ -1,4 +1,4 @@
 <div class="input">
   <label class="input__label">$</label>
-  <input class="input__field" [(ngModel)]="input" type="text" mask="separator.0" thousandSeparator="," (input)="setValue($event)" maxlength="13">
+  <input class="input__field" [ngModel]="input" type="text" mask="separator.0" thousandSeparator="," (ngModelChange)="setValue($event)" maxlength="13">
 </div>

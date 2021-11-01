@@ -30,9 +30,8 @@ export class SpCurrencyInputComponent implements ControlValueAccessor {
     this.input = MaskManager.stringMaskToNormal(input);
   }
 
-  setValue($event: Event): void {
-    const input = ($event.target as any).value;
-    this.onChange(MaskManager.stringMaskToNormal(input));
+  setValue(value: string): void {
+    this.onChange(MaskManager.stringMaskToNormal(value));
   }
 }
 

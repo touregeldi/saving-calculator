@@ -1,5 +1,5 @@
 <div class="date">
-  <span class="date__label" (click)="monthChanger(false)"><</span>
+  <span class="date__label date__label--previous" (click)="monthChanger(false)"><</span>
   <div class="date__field">{{date | date: 'MMMM, y'}}</div>
-  <span class="date__label" (click)="monthChanger(true)">></span>
+  <span class="date__label date__label--next" (click)="monthChanger(true)">></span>
 </div>

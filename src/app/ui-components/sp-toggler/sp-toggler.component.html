@@ -1,4 +1,4 @@
 <div class="toggler">
-  <input type="checkbox" (click)="setValue()" [(ngModel)]="toggler">
+  <input type="checkbox" [ngModel]="toggler" (ngModelChange)="setValue($event)">
   <span class="toggler__slider"></span>
 </div>

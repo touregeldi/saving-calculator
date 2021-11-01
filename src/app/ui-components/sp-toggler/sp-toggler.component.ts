@@ -20,19 +20,22 @@ export class SpTogglerComponent implements ControlValueAccessor {
   public toggler: boolean;
 
   registerOnChange(fn: any): void {
+    console.log('onchange', fn);
     this.onChange = fn;
   }
 
   registerOnTouched(fn: any): void {
+    console.log('ontouch', fn);
     this.onTouch = fn;
   }
 
   writeValue(value: boolean): void {
+    console.log('writevlaue', value);
     this.toggler = value;
   }
 
-  setValue(): void {
-    this.toggler = !this.toggler;
+  setValue(value: boolean): void {
+    this.toggler = value;
     this.onChange(this.toggler);
     this.onTouch();
   }
